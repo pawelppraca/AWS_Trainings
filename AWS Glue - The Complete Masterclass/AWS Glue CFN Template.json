@@ -1,3 +1,51 @@
 {
-    "AWSTemplate"
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Description": "CloudFormation template for Glue Job Creation",
+    "Resources": {
+        "glueetljob": {
+          "Type": "AWS::Glue::Job",
+          "Properties": {
+            "MaxCapacity": "2",
+            "Command": { 
+              "Name": "glueetl",
+              "PythonVersion": "3.12",
+              "ScriptLocation": 
+                {"Fn::Join" : ["",[ "s3://awsglueudemycourse-ppp-gluejobs-content/scripts/", "gluejob1_script.py" ] ]}
+              
+            },
+            "Connections": {
+              "Connections": [
+                "String"
+              ]
+            },
+            "DefaultArguments": "JSON",
+            "Description": "String",
+            "ExecutionClass": "String",
+            "ExecutionProperty": {
+              "MaxConcurrentRuns": "Number"
+            },
+            "GlueVersion": "String",
+            "JobMode": "String",
+            "JobRunQueuingEnabled": false,
+            "LogUri": "String",
+            "MaintenanceWindow": "String",
+            "MaxCapacity": "Number",
+            "MaxRetries": "Number",
+            "Name": "String",
+            "NonOverridableArguments": "JSON",
+            "NotificationProperty": {
+              "NotifyDelayAfter": "Number"
+            },
+            "NumberOfWorkers": "Number",
+            "Role": "String", // Required
+            "SecurityConfiguration": "String",
+            "Tags": "JSON",
+            "Timeout": "Number",
+            "WorkerType": "String"
+          }
+        }
+    }
+    
+    
+
 }
