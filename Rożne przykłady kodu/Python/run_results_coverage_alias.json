@@ -1,0 +1,163 @@
+{
+    "metadata": {
+        "dbt_schema_version": "https://schemas.getdbt.com/dbt/run-results/v5.json",
+        "dbt_version": "1.7.18",
+        "generated_at": "2024-11-06T13:25:35.794215Z",
+        "invocation_id": "c65183f6-cabd-4804-873d-016537edd588",
+        "env": {}
+    },
+    "results": [
+        {
+            "status": "fail",
+            "timing": [
+                {
+                    "name": "compile",
+                    "started_at": "2024-11-06T13:25:15.097109Z",
+                    "completed_at": "2024-11-06T13:25:15.110126Z"
+                },
+                {
+                    "name": "execute",
+                    "started_at": "2024-11-06T13:25:15.112159Z",
+                    "completed_at": "2024-11-06T13:25:19.690297Z"
+                }
+            ],
+            "thread_id": "Thread-1 (worker)",
+            "execution_time": 5.013603925704956,
+            "adapter_response": {
+                "_message": "SUCCESS",
+                "rows_affected": -1
+            },
+            "message": "Got 110 results, configured to fail if != 0",
+            "failures": 110,
+            "unique_id": "test.grsi_dp_dwh.recon_row_count_coverage_coverage_code__coverage_name________qualifiercode__qualifiername____s_model_1_policykey_s_model_2_policykey__ref_staging_warehouse_repository_limits___ref_staging_warehouse_repository_policies___s_model_1__currentflag_true__.0d5517a82b",
+            "compiled": true,
+            "compiled_code": " \n    \n    \n    \n\t\n\n\n    WITH source_cte AS\n        (\n            SELECT  \n                \n                    qualifiercode ,\n                \n                    qualifiername \n                \n                , COUNT(*) AS Source_records_qty\n            FROM  grsi_dp_eu_test.transform.staging_warehouse_repository_limits AS s_model_1  \n            \n                JOIN  grsi_dp_eu_test.transform.staging_warehouse_repository_policies AS s_model_2  ON \n                        \n                            s_model_1.policykey = s_model_2.policykey \n                        \n            \n            --WHERE Clause\n            \n                WHERE s_model_1._currentflag = true\n            \n            --GROUP BY  \n            group by 1,2\n            --having clause\n            \n            \n        ),\n   \n    \n    \n        target_cte AS\n            (\n                SELECT \n                    \n                        coverage_code ,\n                    \n                        coverage_name \n                    \n                    , COUNT(*) AS Target_records_qty\n                FROM  grsi_dp_eu_test.dwh.coverage AS model\n                \n                --WHERE Clause\n                \n                --GROUP BY  \n                group by 1,2\n                --having clause\n                \n                \n            )\n\n\n    SELECT * FROM source_cte s\n    JOIN target_cte t ON\n            \n                t.coverage_code = s.qualifiercode  AND \n            \n                t.coverage_name = s.qualifiername \n            \n    WHERE Source_records_qty <> target_records_qty\n\n",
+            "relation_name": "grsi_dp_eu_test.staging_test.coverage_row_counts"
+        },
+        {
+            "status": "fail",
+            "timing": [
+                {
+                    "name": "compile",
+                    "started_at": "2024-11-06T13:25:20.114726Z",
+                    "completed_at": "2024-11-06T13:25:20.125274Z"
+                },
+                {
+                    "name": "execute",
+                    "started_at": "2024-11-06T13:25:20.127287Z",
+                    "completed_at": "2024-11-06T13:25:24.223781Z"
+                }
+            ],
+            "thread_id": "Thread-1 (worker)",
+            "execution_time": 4.541510105133057,
+            "adapter_response": {
+                "_message": "SUCCESS",
+                "rows_affected": -1
+            },
+            "message": "Got 58 results, configured to fail if != 0",
+            "failures": 58,
+            "unique_id": "test.grsi_dp_dwh.recon_sums_coverage_coverage_code__coverage_name________qualifiercode__qualifiername____s_model_1_policykey_s_model_2_policykey__ref_staging_warehouse_repository_limits___ref_staging_warehouse_repository_policies___deductibleoriginalcurrency__s_model_1__currentflag_true__deductible_amount__.9066f1e25b",
+            "compiled": true,
+            "compiled_code": "\n\n      \n     \n    \n    \n    \n\t\n\n\n    WITH source_cte AS\n    (\n        SELECT \n            \n                qualifiercode ,\n            \n                qualifiername \n            \n            , SUM(deductibleoriginalcurrency) AS source_SUM\n        FROM  grsi_dp_eu_test.transform.staging_warehouse_repository_limits  AS s_model_1 \n        \n            JOIN  grsi_dp_eu_test.transform.staging_warehouse_repository_policies AS s_model_2 ON \n                    \n                        s_model_1.policykey = s_model_2.policykey \n                    \n                \n        --WHERE Clause\n        \n        WHERE s_model_1._currentflag = true\n        \n        --GROUP BY  \n        group by 1,2\n        --having clause\n        \n        \n    ),\n\n    \n        target_cte AS\n            (\n                SELECT \n                    \n                        coverage_code ,\n                    \n                        coverage_name \n                    \n                    ,SUM(deductible_amount) AS target_SUM\n                FROM  grsi_dp_eu_test.dwh.coverage  model\n                        \n                --WHERE Clause\n                \n                --GROUP BY  \n                group by 1,2\n                --having clause\n                \n                \n            )\n\n    \n    SELECT * FROM source_cte s\n    JOIN target_cte t ON\n            \n                t.coverage_code = s.qualifiercode  AND \n            \n                t.coverage_name = s.qualifiername \n            \n    WHERE source_SUM <> target_SUM\n\n\n",
+            "relation_name": "grsi_dp_eu_test.staging_test.coverage_sums_deductible_amount"
+        },
+        {
+            "status": "fail",
+            "timing": [
+                {
+                    "name": "compile",
+                    "started_at": "2024-11-06T13:25:24.662227Z",
+                    "completed_at": "2024-11-06T13:25:24.671259Z"
+                },
+                {
+                    "name": "execute",
+                    "started_at": "2024-11-06T13:25:24.673257Z",
+                    "completed_at": "2024-11-06T13:25:28.600976Z"
+                }
+            ],
+            "thread_id": "Thread-1 (worker)",
+            "execution_time": 4.337753057479858,
+            "adapter_response": {
+                "_message": "SUCCESS",
+                "rows_affected": -1
+            },
+            "message": "Got 99 results, configured to fail if != 0",
+            "failures": 99,
+            "unique_id": "test.grsi_dp_dwh.recon_sums_coverage_coverage_code__coverage_name________qualifiercode__qualifiername____s_model_1_policykey_s_model_2_policykey__ref_staging_warehouse_repository_limits___ref_staging_warehouse_repository_policies___limitoriginalcurrency__s_model_1__currentflag_true__coverage_whole_limit__.fa4dccf399",
+            "compiled": true,
+            "compiled_code": "\n\n      \n     \n    \n    \n    \n\t\n\n\n    WITH source_cte AS\n    (\n        SELECT \n            \n                qualifiercode ,\n            \n                qualifiername \n            \n            , SUM(limitoriginalcurrency) AS source_SUM\n        FROM  grsi_dp_eu_test.transform.staging_warehouse_repository_limits  AS s_model_1 \n        \n            JOIN  grsi_dp_eu_test.transform.staging_warehouse_repository_policies AS s_model_2 ON \n                    \n                        s_model_1.policykey = s_model_2.policykey \n                    \n                \n        --WHERE Clause\n        \n        WHERE s_model_1._currentflag = true\n        \n        --GROUP BY  \n        group by 1,2\n        --having clause\n        \n        \n    ),\n\n    \n        target_cte AS\n            (\n                SELECT \n                    \n                        coverage_code ,\n                    \n                        coverage_name \n                    \n                    ,SUM(coverage_whole_limit) AS target_SUM\n                FROM  grsi_dp_eu_test.dwh.coverage  model\n                        \n                --WHERE Clause\n                \n                --GROUP BY  \n                group by 1,2\n                --having clause\n                \n                \n            )\n\n    \n    SELECT * FROM source_cte s\n    JOIN target_cte t ON\n            \n                t.coverage_code = s.qualifiercode  AND \n            \n                t.coverage_name = s.qualifiername \n            \n    WHERE source_SUM <> target_SUM\n\n\n",
+            "relation_name": "grsi_dp_eu_test.staging_test.coverage_sums_whole_limit"
+        },
+        {
+            "status": "fail",
+            "timing": [
+                {
+                    "name": "compile",
+                    "started_at": "2024-11-06T13:25:29.002577Z",
+                    "completed_at": "2024-11-06T13:25:29.012597Z"
+                },
+                {
+                    "name": "execute",
+                    "started_at": "2024-11-06T13:25:29.014625Z",
+                    "completed_at": "2024-11-06T13:25:33.165282Z"
+                }
+            ],
+            "thread_id": "Thread-1 (worker)",
+            "execution_time": 4.591212034225464,
+            "adapter_response": {
+                "_message": "SUCCESS",
+                "rows_affected": -1
+            },
+            "message": "Got 69 results, configured to fail if != 0",
+            "failures": 69,
+            "unique_id": "test.grsi_dp_dwh.recon_sums_coverage_coverage_code__coverage_name________qualifiercode__qualifiername____s_model_1_policykey_s_model_2_policykey__ref_staging_warehouse_repository_limits___ref_staging_warehouse_repository_policies___premium__s_model_1__currentflag_true__coverage_whole_premium__.22316c2fda",
+            "compiled": true,
+            "compiled_code": "\n\n      \n     \n    \n    \n    \n\t\n\n\n    WITH source_cte AS\n    (\n        SELECT \n            \n                qualifiercode ,\n            \n                qualifiername \n            \n            , SUM(premium) AS source_SUM\n        FROM  grsi_dp_eu_test.transform.staging_warehouse_repository_limits  AS s_model_1 \n        \n            JOIN  grsi_dp_eu_test.transform.staging_warehouse_repository_policies AS s_model_2 ON \n                    \n                        s_model_1.policykey = s_model_2.policykey \n                    \n                \n        --WHERE Clause\n        \n        WHERE s_model_1._currentflag = true\n        \n        --GROUP BY  \n        group by 1,2\n        --having clause\n        \n        \n    ),\n\n    \n        target_cte AS\n            (\n                SELECT \n                    \n                        coverage_code ,\n                    \n                        coverage_name \n                    \n                    ,SUM(coverage_whole_premium) AS target_SUM\n                FROM  grsi_dp_eu_test.dwh.coverage  model\n                        \n                --WHERE Clause\n                \n                --GROUP BY  \n                group by 1,2\n                --having clause\n                \n                \n            )\n\n    \n    SELECT * FROM source_cte s\n    JOIN target_cte t ON\n            \n                t.coverage_code = s.qualifiercode  AND \n            \n                t.coverage_name = s.qualifiername \n            \n    WHERE source_SUM <> target_SUM\n\n\n",
+            "relation_name": "grsi_dp_eu_test.staging_test.coverage_sums_whole_premium"
+        }
+    ],
+    "elapsed_time": 41.51439952850342,
+    "args": {
+        "print": true,
+        "which": "test",
+        "invocation_command": "dbt test --select coverage",
+        "log_format_file": "debug",
+        "partial_parse": true,
+        "populate_cache": true,
+        "show_resource_report": false,
+        "introspect": true,
+        "exclude": [],
+        "log_path": "C:\\Users\\n1601471\\source\\GIT-GRSI\\grsi-dp-warehouse\\lib\\dbt\\grsi_dp_dwh\\logs",
+        "log_level": "info",
+        "select": [
+            "coverage"
+        ],
+        "favor_state": false,
+        "static_parser": true,
+        "log_file_max_bytes": 10485760,
+        "cache_selected_only": false,
+        "vars": {},
+        "log_level_file": "debug",
+        "macro_debugging": false,
+        "use_colors": true,
+        "require_explicit_package_overrides_for_builtin_materializations": false,
+        "log_format": "default",
+        "send_anonymous_usage_stats": true,
+        "printer_width": 80,
+        "warn_error_options": {
+            "include": [],
+            "exclude": []
+        },
+        "enable_legacy_logger": false,
+        "write_json": true,
+        "version_check": true,
+        "use_colors_file": true,
+        "quiet": false,
+        "defer": false,
+        "partial_parse_file_diff": true,
+        "strict_mode": false,
+        "profiles_dir": "C:\\Users\\n1601471\\.dbt",
+        "project_dir": "C:\\Users\\n1601471\\source\\GIT-GRSI\\grsi-dp-warehouse\\lib\\dbt\\grsi_dp_dwh",
+        "indirect_selection": "eager"
+    }
+}
