@@ -1,0 +1,78 @@
+"LogicalID": {
+  "Type": "AWS::Glue::Job",
+  "Properties": {
+    "AllocatedCapacity": "Number",
+    "Command": { // Required
+      "Name": "String",
+      "PythonVersion": "String",
+      "Runtime": "String",
+      "ScriptLocation": "String"
+    },
+    "Connections": {
+      "Connections": [
+        "String"
+      ]
+    },
+    "DefaultArguments": "JSON",
+    "Description": "String",
+    "ExecutionClass": "String",
+    "ExecutionProperty": {
+      "MaxConcurrentRuns": "Number"
+    },
+    "GlueVersion": "String",
+    "JobMode": "String",
+    "JobRunQueuingEnabled": false,
+    "LogUri": "String",
+    "MaintenanceWindow": "String",
+    "MaxCapacity": "Number",
+    "MaxRetries": "Number",
+    "Name": "String",
+    "NonOverridableArguments": "JSON",
+    "NotificationProperty": {
+      "NotifyDelayAfter": "Number"
+    },
+    "NumberOfWorkers": "Number",
+    "Role": "String", // Required
+    "SecurityConfiguration": "String",
+    "Tags": "JSON",
+    "Timeout": "Number",
+    "WorkerType": "String"
+  }
+}
+"LogicalID": {
+  "Type": "AWS::IAM::Role",
+  "Properties": {
+    "AssumeRolePolicyDocument": "JSON", // Required
+    "Description": "String",
+    "ManagedPolicyArns": [
+      {
+        "String"
+      }
+    ],
+    "MaxSessionDuration": "Number",
+    "Path": "String",
+    "PermissionsBoundary": "String",
+    "Policies": [
+      {
+        "PolicyDocument": "JSON",
+        "PolicyName": "String"
+      }
+    ],
+    "RoleName": "String",
+    "Tags": [
+        {
+          "Key": "String",
+          "Value": "String"
+        }
+    ]
+  }
+}
+"LogicalID": {
+  "Type": "AWS::IAM::RolePolicy",
+  "Properties": {
+    "PolicyDocument": "JSON",
+    "PolicyName": "String", // Required
+    "RoleName": "String" // Required
+  }
+  
+}
