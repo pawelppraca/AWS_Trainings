@@ -17,6 +17,10 @@ from typing import Dict, Optional, Union, Callable
 from urllib import parse
 import uuid
 
+BUCKET_NAME = os.getenv("BUCKET_NAME", "grsi-dp-ingestion-eu-development")
+DESTINATION_S3_KEY = "staging_test/integration_test/integration_test.parquet"
+S3_URI = f"s3://{BUCKET_NAME}/{DESTINATION_S3_KEY}"
+
 
 
 logger = logging.getLogger()
