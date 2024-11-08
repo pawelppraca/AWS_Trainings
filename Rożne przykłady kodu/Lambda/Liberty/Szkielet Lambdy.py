@@ -17,9 +17,13 @@ from typing import Dict, Optional, Union, Callable
 from urllib import parse
 import uuid
 
-BUCKET_NAME = os.getenv("BUCKET_NAME", "grsi-dp-ingestion-eu-development")
+
+SOURCE_BUCKET_NAME = os.getenv("BUCKET_NAME", "aws-ppp-sources")
+SOURCE_S3_KEY = "json_files/run_results_coverage_alias.json"
+SOURCE_S3_URI = f"s3://{BUCKET_NAME}/{SOURCE_S3_KEY}"
+
+DEST_BUCKET_NAME = os.getenv("BUCKET_NAME", "aws-ppp-destinations")
 DESTINATION_S3_KEY = "staging_test/integration_test/integration_test.parquet"
-S3_URI = f"s3://{BUCKET_NAME}/{DESTINATION_S3_KEY}"
 
 
 
