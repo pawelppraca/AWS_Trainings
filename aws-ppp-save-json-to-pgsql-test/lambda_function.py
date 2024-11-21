@@ -1,14 +1,16 @@
+#import boto3
 import json
 from pathlib import Path
 import pandas as pd
-import boto3
-from botocore.exceptions import ClientError
 import logging
-import psycopg2
-import io    
 import os
-import pathlib
 import awswrangler as wr
+
+
+#from botocore.exceptions import ClientError
+#import psycopg2
+#import io    
+#import pathlib
 
 
 #from io import StringIO, BytesIO

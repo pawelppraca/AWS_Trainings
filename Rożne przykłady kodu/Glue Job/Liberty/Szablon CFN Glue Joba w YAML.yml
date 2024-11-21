@@ -1,0 +1,56 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Resources:
+  GlueJobRole:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: 'Allow'
+            Principal:
+              Service: 'glue.amazonaws.com'
+            Action: 'sts:AssumeRole'
+      Policies:
+        - PolicyName: 'GlueJobPolicy'
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: 'Allow'
+                Action:
+                  - 's3:*'
+                  - 'logs:*'
+                  - 'redshift:*'
+                Resource: '*'
+
+  GlueJob:
+    Type: 'AWS::Glue::Job'
+    Properties:
+      Command:
+        Name: 'glueetl'
+        ScriptLocation: 's3://your-script-location/glue-script.py'
+        PythonVersion: '3'
+      Role: !GetAtt GlueJobRole.Arn
+      DefaultArguments:
+        '--TempDir': 's3://your-temp-dir/'
+        '--job-bookmark-option': 'job-bookmark-enable'
+        '--enable-metrics': ''
+      MaxRetries: 0
+      Timeout: 2880
+      GlueVersion: '2.0'
+      NumberOfWorkers: 2
+      WorkerType: 'G.1X'
+
+  RedshiftConnection:
+    Type: 'AWS::Glue::Connection'
+    Properties:
+      ConnectionInput:
+        Name: 'redshift-connection'
+        ConnectionType: 'JDBC'
+        ConnectionProperties:
+          JDBC_CONNECTION_URL: 'jdbc:redshift://your-redshift-cluster:5439/your-database'
+          USERNAME: 'your-username'
+          PASSWORD: 'your-password'
+        PhysicalConnectionRequirements:
+          SubnetId: 'your-subnet-id'
+          SecurityGroupIdList:
+            - 'your-security-group-id'
