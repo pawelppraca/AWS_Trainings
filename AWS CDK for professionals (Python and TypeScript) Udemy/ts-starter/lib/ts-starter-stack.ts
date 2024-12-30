@@ -8,12 +8,15 @@ export class TsStarterStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
-    new aws_s3.Bucket(this, 'TsBucket', {
+    const my_bucket = new aws_s3.Bucket(this, 'TsBucket', {
       lifecycleRules: [
         {
           expiration: cdk.Duration.days(5)
         }
       ]
     })
+
+    new cdk.CfnOutput(this, "TsBucketName",{value: my_bucket.bucketName})
+    my_bucket.applyRemovalPolicy(cdk.RemovalPolicy.DESTROY)
   }
 }
