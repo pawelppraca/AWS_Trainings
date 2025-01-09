@@ -1,0 +1,1 @@
+// Rola która daje dostęp do Bucketu S3 dla RedShifta

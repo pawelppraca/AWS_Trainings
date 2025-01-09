@@ -1,0 +1,61 @@
+Co potrzebuję aby Glue Job podłączył się do Redshift używając IAM Authentications ale nie używając nazwy użytkownika i hasła?
+Potrzebne to jest aby wyjesportować dane z tabeli w Redshift do pliku Parquet i zapisać ten plik w folderze w S3 Bucket.
+
+
+Aby AWS Glue Job mógł połączyć się z Amazon Redshift używając IAM Authentication bez konieczności podawania nazwy użytkownika i hasła, a następnie wyeksportować dane z tabeli w Redshift do pliku Parquet i zapisać ten plik w folderze w S3 Bucket, potrzebujesz następujących kroków i zasobów:
+
+IAM Role dla Redshift:
+    Utwórz rolę IAM, która pozwala Amazon Redshift na dostęp do S3. Rola ta powinna mieć politykę, która pozwala na odczyt i zapis do bucketu S3.
+
+IAM Role dla Glue:
+    Utwórz rolę IAM dla AWS Glue, która pozwala na dostęp do Amazon Redshift i S3. Rola ta powinna mieć politykę, która pozwala na odczyt i zapis do bucketu S3 oraz na połączenie z Redshift.
+
+Konfiguracja Amazon Redshift:
+    Przypisz rolę IAM utworzoną dla Redshift do swojego klastra Redshift. Upewnij się, że klaster Redshift ma odpowiednie uprawnienia do zapisu do bucketu S3.
+
+Konfiguracja AWS Glue:
+    Utwórz połączenie w AWS Glue do swojego klastra Redshift, używając IAM Authentication.
+Tworzenie Glue Job:
+    Napisz skrypt Glue, który połączy się z Redshift, wyeksportuje dane do formatu Parquet i zapisze je w S3.
+
+
+To connect an AWS Glue Job to Amazon Redshift using IAM Authentication and extract data to Parquet files, you’ll need to follow these steps:
+
+Set Up IAM Roles and Policies:
+    IAM Role for Redshift: Create an IAM role that allows Amazon Redshift to access Amazon S3. Attach a policy that grants the necessary permissions to read from and write to your S3 bucket.
+
+IAM Role for Glue: 
+    Create an IAM role for AWS Glue with permissions to access Amazon Redshift and Amazon S3. Attach policies that allow Glue to perform necessary actions on these services.
+
+Configure Amazon Redshift:
+    Associate IAM Role with Redshift: Attach the IAM role created for Redshift to your Redshift cluster. This allows Redshift to assume the role and access S3.
+
+VPC Configuration: 
+    Ensure that your Redshift cluster, Glue job, and S3 bucket are in the same VPC or have the necessary VPC peering to communicate.
+
+Create an S3 Bucket for Temporary Storage:
+Temporary Storage: 
+    Set up an S3 bucket or directory for temporary storage when reading from and writing to Redshift. This is used by Glue to stage data during the ETL process.
+Create a Glue Job:
+Connection to Redshift: 
+    In AWS Glue Studio or through the AWS Glue console, create a connection to your Redshift cluster using the IAM role.
+
+Script to Extract Data: 
+    Write a Glue ETL script to extract data from Redshift and write it to Parquet files in S3. Below is an example script:
+
+
+
+Kroki do wykonania:
+Utwórz rolę IAM dla Redshift i Glue za pomocą AWS CDK.
+Przypisz rolę IAM do klastra Redshift.
+Utwórz połączenie w AWS Glue do Redshift używając IAM Authentication.
+Utwórz i uruchom Glue Job z powyższym skryptem.
+
+Redshift connections - AWS GLue
+https://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-etl-connect-redshift-home.html
+
+Connecting to Amazon Redshift in AWS Glue Studio
+https://docs.aws.amazon.com/glue/latest/dg/connecting-to-data-redshift.html
+
+Execute Amazon Redshift Commands using AWS Glue
+https://github.com/aws-samples/amazon-redshift-commands-using-aws-glue
