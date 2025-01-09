@@ -45,5 +45,13 @@ def main():
     copy_s3_object(source_bucket, source_key, dest_bucket, dest_key)
 
 
+
+    source_bucket = 'aws-ppp-sources'
+    source_prefix = 'dane_RS/'
+    dest_bucket = 'aws-ppp-destinations'
+    dest_prefix = 'dane_docelowe/'
+
+    copy_s3_folder(source_bucket, source_prefix, dest_bucket, dest_prefix)
+
 if __name__ == "__main__":
     main()
