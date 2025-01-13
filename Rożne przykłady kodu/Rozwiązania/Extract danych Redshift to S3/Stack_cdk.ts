@@ -36,5 +36,10 @@ export class RedshiftGlueIamRoleStack extends cdk.Stack {
   }
 }
 
+
+
+
+
+
 const app = new cdk.App();
 new RedshiftGlueIamRoleStack(app, 'RedshiftGlueIamRoleStack');
