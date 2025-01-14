@@ -3,7 +3,7 @@ import { Construct } from 'constructs';
 import { NodejsFunction } from 'aws-cdk-lib/aws-lambda-nodejs'; //aby móc używać TS w kodzie stosu
 import { Runtime } from 'aws-cdk-lib/aws-lambda';
 import { join } from 'path';
-import { RestApi } from 'aws-cdk-lib/aws-apigateway';
+import { LambdaIntegration, RestApi } from 'aws-cdk-lib/aws-apigateway';
 
 export class TsRestApiStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
@@ -18,8 +18,14 @@ export class TsRestApiStack extends cdk.Stack {
 
     //Konstrukcja API Gateway
     const api = new RestApi(this, 'EmlApi');
-    const emplResource = api.root.addResource('empl');
+    const emplResource = api.root.addResource('empl'); //podaplikacja API
 
+    //Łączenie API Gateway z Lambdą
+    const emplLambdaIntegration = new LambdaIntegration (emplLambda)
+
+    //Tworzymy metody w zasobie emplResource
+    emplResource.addMethod('GET', emplLambdaIntegration)
+    emplResource.addMethod('POST', emplLambdaIntegration)
   }
 }
 
