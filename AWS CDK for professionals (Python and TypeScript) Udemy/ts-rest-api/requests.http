@@ -1,4 +1,16 @@
 
 @url = https://108yn5o0v0.execute-api.eu-west-1.amazonaws.com/prod/
 
-GET {{ url }}/empl
+GET {{ url }}/empl?id=26275131
+###
+
+POST {{ url }}/empl
+content-type: application/json
+{
+    "name": "John",
+    "position": "engineer",
+    "nationality":  "English"
+}
+###
+
+POST {{ url }}/empl?name=John&position=enginieer
