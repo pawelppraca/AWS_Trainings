@@ -24,6 +24,12 @@ export class GlueJobStack extends cdk.Stack {
     scriptBucket.grantRead(glueJobRole);
     dataBucket.grantReadWrite(glueJobRole);
 
+    // Define the existing PipelineDeployment role
+    const pipelineDeploymentRole = iam.Role.fromRoleArn(this, 'PipelineDeploymentRole', 'arn:aws:iam::your-account-id:role/PipelineDeployment');
+
+    // Grant write access to the script bucket for the PipelineDeployment role
+    scriptBucket.grantWrite(pipelineDeploymentRole);
+
     // Define the Glue Job
     const glueJob = new glue.CfnJob(this, 'GlueJob', {
       role: glueJobRole.roleArn,
