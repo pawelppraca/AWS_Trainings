@@ -6,11 +6,29 @@ GET {{ url }}/empl?id=26275131
 
 POST {{ url }}/empl
 content-type: application/json
+
 {
-    "name": "John",
-    "position": "engineer",
-    "nationality":  "English"
+    "name": "Pawel P",
+    "position": "DE",
+    "nationality": "polish"
 }
 ###
 
-POST {{ url }}/empl?name=John&position=enginieer
+POST {{ url }}/empl?name=Edgar&position=worker
+
+###
+
+
+"4c1b564c-2300-488c-ad4f-31a65d6e2498"
+
+
+###
+
+GET {{ url }}/empl?id=4c1b564c-2300-488c-ad4f-31a65d6e2498
+###
+
+GET {{ url }}/empl?id=8013fa56-f11c-4a65-8538-2b38f2d828cb
+###
+
+GET {{ url }}/empl?id=a3fb1885-1dc6-4050-b521-6972bf1894ef
+###
