@@ -18,3 +18,8 @@ WHERE
     AND m.masking_policy_name IS NOT NULL
     AND t.table_name = '<your_table_name>'  -- Replace with your table name
     AND t.table_schema = '<your_schema_name>'; -- Replace with your schema name
+
+
+--Widoki pokazujące MASKING POLICY
+select * from svv_masking_policy LIMIT 100;
+select * from svv_attached_masking_policy LIMIT 100;
